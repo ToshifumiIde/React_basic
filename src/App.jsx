@@ -1,7 +1,14 @@
-import React,{ useState } from "react";
+import React,{ useState ,useEffect } from "react";
 import ColorfulMessage from "./components/ColorfulMessage";
 
 const App = ()=> {
+  // console.log("最初");
+  const [num , setNum] = useState(0);
+  const [faceShowFlag , setFaceShowFlag] = useState(false);
+
+  const onClickSwitchShowFlag = ()=> {
+    setFaceShowFlag(!faceShowFlag);
+  }
 
   const onClickCountUp = () => {
     setNum(num + 1);
@@ -9,14 +16,28 @@ const App = ()=> {
     //stringを渡すことも可能
   };
 
-  const contentLadyStyle = {
-    color:"pink",
-    fontSize:"24px",
-  };
+  useEffect(()=> {
+    if (num > 0){
+      if(num % 3 === 0) {
+        faceShowFlag || setFaceShowFlag(true);
+      } else {
+        faceShowFlag && setFaceShowFlag(false);
+      }
+    }
+  },[num]);
+  //useEffect(第一引数,第二引数)
+  //第一引数：実行したい処理内容
+  //第二引数：実行したい(変化の)タイミングを[]配列で指定（複数の条件を設定可能）。空の配列の場合初回のみ、無記入の場合renderがかかる度
+  //処理の関心を分離することが可能
+
+
+
+  // const contentLadyStyle = {
+  //   color:"pink",
+  //   fontSize:"24px",
+  // };
   //styleをオブジェクトとして渡すことも可能。
   //この場合、記法はキャメルケース（cssだとfont-size ）。
-
-  const [num , setNum] = useState(0);
 
   return (
     <>
@@ -36,7 +57,11 @@ const App = ()=> {
     }}>
       カウントダウン
     </button>
+    <button onClick={onClickSwitchShowFlag}>on/off</button>
     <p>{num}</p>
+    {faceShowFlag ? <p>٩( 'ω' )و </p>:null}
+    {/* {faceShowFlag || <p>✌︎('ω')✌︎</p> } */}
+    {/* useStateの初期値をコンポーネント内で使う場合、JSを使用することになるため、カーリーブラケットで囲う */}
     {/* Reactでのイベント設定はキャメルケースで記入 */}
     {/* この場合、onClick時が関数の実行タイミング()となる */}
     {/* =の後ろをカーリーブラケット{}で囲うと「中にJSを記載可能」 */}
