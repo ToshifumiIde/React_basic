@@ -1,10 +1,12 @@
-import React from "react";
+import React,{ useState } from "react";
 import ColorfulMessage from "./components/ColorfulMessage";
 
 const App = ()=> {
 
-  const onClickButton = () => {
-    alert();
+  const onClickCountUp = () => {
+    setNum(num + 1);
+    //setNum()関数内に実行したい処理を記入する
+    //stringを渡すことも可能
   };
 
   const contentLadyStyle = {
@@ -14,14 +16,27 @@ const App = ()=> {
   //styleをオブジェクトとして渡すことも可能。
   //この場合、記法はキャメルケース（cssだとfont-size ）。
 
+  const [num , setNum] = useState(0);
+
   return (
     <>
     <h1 style={{color:"red",}}>hello world</h1>
     <ColorfulMessage color="blue">お元気ですか？</ColorfulMessage>
     <ColorfulMessage color="pink">元気です！</ColorfulMessage>
-    <button onClick={onClickButton}>
-      ボタン
+    <button onClick={onClickCountUp}>
+      カウントアップ！！
     </button>
+    <button onClick={()=>{
+      setNum(num + 1);
+    }}>
+      カウントアップ
+    </button>
+    <button onClick={()=>{
+      setNum(num - 1);
+    }}>
+      カウントダウン
+    </button>
+    <p>{num}</p>
     {/* Reactでのイベント設定はキャメルケースで記入 */}
     {/* この場合、onClick時が関数の実行タイミング()となる */}
     {/* =の後ろをカーリーブラケット{}で囲うと「中にJSを記載可能」 */}
